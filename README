@@ -1,3 +1,12 @@
 GoldenTeeGame: Block and Roll
 
 Chris Dennis
+The main point of this project was to familiarize ourselves with how to use the Golden T game framework and the difficulties of building a game in that framework. As a result, the game did not need to be the greatest ever created but it did have to meet a few basic requirements:
+
+1. The game should be a recognizable member of a particular genre of video game. I chose to build a puzzle platformer that closely resembled the TI-83 calculator game BlockDude.
+2. The game does not need to be complete but you should have characters that move about the game, it should be possible for the player to interact with the game (the controls can be crude), and you should have at least several of the tropes of your game. For example, the Real Time Strategy game could let you place buildings that construct units, the RPG could have rudimentary turn-based combat, etc.
+3. The game should have either two distinct game "modes" or two distinct levels. Game menus with stuff like "start game" does not count as a mode. By "levels", I mean two levels that play differently - and not simply that there are more bad guy or the bad guys are faster.
+4. Focus on gameplay mechanics, not graphics or dialog or anything else. Your game can use stick figure graphics or crudely cropped images stolen from existing games. Just make sure the images are recognizable enough so we can tell what's happening in your game.
+
+One day I plan to go back and clean up the code, since it is quite embarassing. 
+But for now, play the jar file and enjoy!

@@ -4,6 +4,7 @@ package platformPuzzle;
 import java.awt.image.BufferedImage;
 import com.golden.gamedev.object.sprite.AdvanceSprite;
 
+@SuppressWarnings("serial")
 public class MyHeroSprite extends AdvanceSprite
 {
     public MyHeroSprite(BufferedImage[] image){

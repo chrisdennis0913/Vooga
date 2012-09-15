@@ -14,12 +14,9 @@ import com.golden.gamedev.Game;
 import com.golden.gamedev.GameLoader;
 import com.golden.gamedev.object.*;
 import com.golden.gamedev.object.background.ImageBackground;
-import com.golden.gamedev.object.background.TileBackground;
 import com.golden.gamedev.object.sprite.AdvanceSprite;
 
-
-public class BlockAndRoll extends Game
-{
+public class BlockAndRoll extends Game {
     private AdvanceSprite myHero;
     private SpriteGroup myHeroGroup;
     private Background myBackdrop;
@@ -100,10 +97,8 @@ public class BlockAndRoll extends Game
     private SpriteGroup doorGroup;
     private Timer moveRate;
 
-
     @Override
-    public void initResources ()
-    {
+    public void initResources () {
         myBackdrop = new ImageBackground(getImage("resources/forester.png"));
         myBackdrop.setClip(0, 0, 800, 600);
 
@@ -154,9 +149,8 @@ public class BlockAndRoll extends Game
         helpGroup.setBackground(myBackdrop);
         toggleHelp = new Sprite(getImage("resources/toggleHelp.png"), 300, 550);
         toggleHelp.setBackground(myBackdrop);
-        
+
         helpGroup.add(toggleHelp);
-        
 
         door1 = new Sprite(getImage("resources/door1.png"), 16, 5 * yConst);
         door1.setBackground(myBackdrop);
@@ -284,11 +278,9 @@ public class BlockAndRoll extends Game
         toDoor.setCollisionGroup(myHeroGroup, doorGroup);
     }
 
-
     @Override
-    public void render (Graphics2D pen)
-    { // used to actually show graphics
-      // clear last frame
+    public void render (Graphics2D pen) { // used to actually show graphics
+                                          // clear last frame
         pen.setColor(Color.WHITE);
         pen.fillRect(0, 0, getWidth(), getHeight());
         // render sprites based on their current state
@@ -301,30 +293,23 @@ public class BlockAndRoll extends Game
         helpGroup.render(pen);
     }
 
-
     @Override
-    public void update (long elapsedTime)
-    {
+    public void update (long elapsedTime) {
         helpGroup.update(elapsedTime);
         if (currentLevel == 1) updateLevel1(elapsedTime);
         if (currentLevel == 2) updateLevel2(elapsedTime);
         if (currentLevel == 3) updateDone(elapsedTime);
     }
 
-
-    private void updateDone (long elapsedTime)
-    {
+    private void updateDone (long elapsedTime) {
         Congrats.update(elapsedTime);
-        if (keyPressed(java.awt.event.KeyEvent.VK_Q))
-        {//Quit game       
+        if (keyPressed(java.awt.event.KeyEvent.VK_Q)) {//Quit game       
             notifyExit();
         }
-        
+
     }
 
-
-    private void updateLevel1 (long elapsedTime)
-    {
+    private void updateLevel1 (long elapsedTime) {
         // update sprites based on their current state
         myHero.update(elapsedTime);
         myHeroGroup.update(elapsedTime);
@@ -334,20 +319,16 @@ public class BlockAndRoll extends Game
         powerUp.checkCollision();
         powerUpsGroup.removeInactiveSprites();
         numPowerUps = powerUpsGroup.getSize();
-        if (keyPressed(java.awt.event.KeyEvent.VK_UP))
-        {
+        if (keyPressed(java.awt.event.KeyEvent.VK_UP)) {
             jump();
         }
-        if (keyPressed(java.awt.event.KeyEvent.VK_DOWN))
-        {//down
-            if (!carryingRock & notMoving())
-            {
+        if (keyPressed(java.awt.event.KeyEvent.VK_DOWN)) {//down
+            if (!carryingRock & notMoving()) {
                 move("facing");
                 pickUp.checkCollision();
                 carryRock();
             }
-            else if (carryingRock & notMoving())
-            {
+            else if (carryingRock & notMoving()) {
                 Sprite carry = carriedRock.get(0);
                 carryingRock = false;
                 carry.setLocation(carry.getX() + 32 * myHero.getDirection(),
@@ -356,57 +337,46 @@ public class BlockAndRoll extends Game
                 carriedRock.clear();
             }
         }
-        if (keyPressed(java.awt.event.KeyEvent.VK_RIGHT))
-        {//right
-            if (notMoving())
-            {
+        if (keyPressed(java.awt.event.KeyEvent.VK_RIGHT)) {//right
+            if (notMoving()) {
                 move("right");
             }
         }
 
-        if (keyPressed(java.awt.event.KeyEvent.VK_LEFT))
-        {
-            if (notMoving())
-            {
+        if (keyPressed(java.awt.event.KeyEvent.VK_LEFT)) {
+            if (notMoving()) {
                 move("left");
             }
         }
 
-        if (moveRate.action(elapsedTime))
-        {
+        if (moveRate.action(elapsedTime)) {
             myHero.setHorizontalSpeed(0);
             setProperXHero();
             checkForDropHero();
         }
 
-        if (keyPressed(java.awt.event.KeyEvent.VK_R))
-        {//Reset Level        
+        if (keyPressed(java.awt.event.KeyEvent.VK_R)) {//Reset Level        
             resetLevel1();
         }
-        if (keyPressed(java.awt.event.KeyEvent.VK_Q))
-        {//Quit game       
+        if (keyPressed(java.awt.event.KeyEvent.VK_Q)) {//Quit game       
             notifyExit();
         }
-        if (keyPressed(java.awt.event.KeyEvent.VK_H) & !help.isActive())
-        {
+        if (keyPressed(java.awt.event.KeyEvent.VK_H) & !help.isActive()) {
             help.setActive(true);
             helpGroup.add(help);
         }
-        else if (keyPressed(java.awt.event.KeyEvent.VK_H) & help.isActive())
-        {
+        else if (keyPressed(java.awt.event.KeyEvent.VK_H) & help.isActive()) {
             help.setActive(false);
         }
 
-        if (carryingRock)
-        {
+        if (carryingRock) {
             Sprite carried = carriedRock.get(0);
             carried.setX(myHero.getX());
             carried.setY(myHero.getY() - 43);
             setProperXRock(carried);
             setProperY(carried);
         }
-        if (finishedLevel1())
-        {
+        if (finishedLevel1()) {
             currentLevel++;
             prepareLevel2();
         }
@@ -418,9 +388,7 @@ public class BlockAndRoll extends Game
         doorGroup.update(elapsedTime);
     }
 
-
-    private void updateLevel2 (long elapsedTime)
-    {
+    private void updateLevel2 (long elapsedTime) {
         // update sprites based on their current state
         myHero.update(elapsedTime);
         myHeroGroup.update(elapsedTime);
@@ -430,20 +398,16 @@ public class BlockAndRoll extends Game
         powerUp.checkCollision();
         powerUpsGroup.removeInactiveSprites();
         numPowerUps = powerUpsGroup.getSize();
-        if (keyPressed(java.awt.event.KeyEvent.VK_UP))
-        {
+        if (keyPressed(java.awt.event.KeyEvent.VK_UP)) {
             jump();
         }
-        if (keyPressed(java.awt.event.KeyEvent.VK_DOWN))
-        {//down
-            if (!carryingRock & notMoving())
-            {
+        if (keyPressed(java.awt.event.KeyEvent.VK_DOWN)) {//down
+            if (!carryingRock & notMoving()) {
                 move("facing");
                 pickUp.checkCollision();
                 carryRock();
             }
-            else if (carryingRock & notMoving())
-            {
+            else if (carryingRock & notMoving()) {
                 Sprite carry = carriedRock.get(0);
                 carryingRock = false;
                 carry.setLocation(carry.getX() + 32 * myHero.getDirection(),
@@ -452,59 +416,48 @@ public class BlockAndRoll extends Game
                 carriedRock.clear();
             }
         }
-        if (keyPressed(java.awt.event.KeyEvent.VK_RIGHT))
-        {//right
-            if (notMoving())
-            {
+        if (keyPressed(java.awt.event.KeyEvent.VK_RIGHT)) {//right
+            if (notMoving()) {
                 move("right");
             }
         }
 
-        if (keyPressed(java.awt.event.KeyEvent.VK_LEFT))
-        {
-            if (notMoving())
-            {
+        if (keyPressed(java.awt.event.KeyEvent.VK_LEFT)) {
+            if (notMoving()) {
                 move("left");
             }
         }
 
-        if (moveRate.action(elapsedTime))
-        {
+        if (moveRate.action(elapsedTime)) {
             myHero.setHorizontalSpeed(0);
             setProperXHero();
             checkForDropHero();
         }
 
-        if (keyPressed(java.awt.event.KeyEvent.VK_R))
-        {//Reset Level        
+        if (keyPressed(java.awt.event.KeyEvent.VK_R)) {//Reset Level        
             resetLevel2();
         }
-        if (keyPressed(java.awt.event.KeyEvent.VK_Q))
-        {//Quit game       
+        if (keyPressed(java.awt.event.KeyEvent.VK_Q)) {//Quit game       
             notifyExit();
         }
-        if (keyPressed(java.awt.event.KeyEvent.VK_H) & !help.isActive())
-        {
+        if (keyPressed(java.awt.event.KeyEvent.VK_H) & !help.isActive()) {
             help.setActive(true);
             helpGroup.add(help);
         }
-        else if (keyPressed(java.awt.event.KeyEvent.VK_H) & help.isActive())
-        {
+        else if (keyPressed(java.awt.event.KeyEvent.VK_H) & help.isActive()) {
             help.setActive(false);
         }
 
-        if (carryingRock)
-        {
+        if (carryingRock) {
             Sprite carried = carriedRock.get(0);
             carried.setX(myHero.getX());
             carried.setY(myHero.getY() - 43);
             setProperXRock(carried);
             setProperY(carried);
         }
-        if (finishedLevel2())
-        {
+        if (finishedLevel2()) {
             currentLevel++;
-            Congrats= new Sprite(getImage("resources/Congrats.png"), 300, 250);
+            Congrats = new Sprite(getImage("resources/Congrats.png"), 300, 250);
             helpGroup.add(Congrats);
         }
         toDoor.checkCollision();
@@ -515,19 +468,14 @@ public class BlockAndRoll extends Game
         doorGroup.update(elapsedTime);
     }
 
-
-    private void jump ()
-    {
-        if (myHero.getY() >= 40 & notMoving())
-        {
+    private void jump () {
+        if (myHero.getY() >= 40 & notMoving()) {
             myHero.setLocation(myHero.getX(), myHero.getY() - 44);
         }
         move("facing");
     }
 
-
-    private void resetLevel1 ()
-    {
+    private void resetLevel1 () {
         myHero.setLocation(18 * xConst, 8 * yConst);
         flowers.setActive(true);
         teddy.setActive(true);
@@ -544,9 +492,7 @@ public class BlockAndRoll extends Game
         boulder5.setLocation(9 * xConst, 10 * yConst);
     }
 
-
-    private void resetLevel2 ()
-    {
+    private void resetLevel2 () {
         myHero.setLocation(12 * xConst, 7 * yConst);
         flowers.setActive(true);
         teddy.setActive(true);
@@ -568,9 +514,7 @@ public class BlockAndRoll extends Game
         boulder10.setLocation(21 * xConst, 9 * yConst);
     }
 
-
-    private void prepareLevel2 ()
-    {
+    private void prepareLevel2 () {
         myHero.setLocation(12 * xConst, 7 * yConst);
         flowers.setActive(true);
         teddy.setActive(true);
@@ -689,32 +633,24 @@ public class BlockAndRoll extends Game
         groundGroup.add(ground40);
     }
 
-
-    private boolean finishedLevel1 ()
-    {
+    private boolean finishedLevel1 () {
         if (!door1.isActive() & numPowerUps == 0) return true;
         return false;
     }
 
-
-    private boolean finishedLevel2 ()
-    {
+    private boolean finishedLevel2 () {
         if (!door2.isActive() & numPowerUps == 0) return true;
         return false;
     }
 
-
-    private void carryRock ()
-    {
+    private void carryRock () {
         Sprite[] rockArray = rockGroup.getSprites();
-        for (int i = 0; i < numBoulders; i++)
-        {
+        for (int i = 0; i < numBoulders; i++) {
             Sprite s = rockArray[i];
             if ((s.getX() - 8) < (myHero.getX()) &
                 (s.getX() + 8 > myHero.getX()) &
                 (s.getY() - 12 < myHero.getY() - 40) &
-                (s.getY() + 12 > myHero.getY() - 40))
-            {
+                (s.getY() + 12 > myHero.getY() - 40)) {
                 carriedRock.add(s);
                 carryingRock = true;
                 return;
@@ -722,101 +658,77 @@ public class BlockAndRoll extends Game
         }
     }
 
-
-    private void checkForDropHero ()
-    {
+    private void checkForDropHero () {
         myHero.setVerticalSpeed(.1);
         hitGround.checkCollision();
         hitRock.checkCollision();
         powerUp.checkCollision();
     }
 
-
-    private void checkForDropRock (Sprite rock)
-    {
+    private void checkForDropRock (Sprite rock) {
         rock.setVerticalSpeed(.1);
         hitGround.checkCollision();
         hitRock.checkCollision();
     }
 
-
-    private void move (String direction)
-    {
+    private void move (String direction) {
         int dir = 1;
         if (direction.equals("left")) dir = -1;
-        else if (direction.equals("facing"))
-        {
+        else if (direction.equals("facing")) {
             dir = myHero.getDirection();
             myHero.setX(myHero.getX() + 5 * dir);
         }
 
-        if (sidesOkay(myHero.getX() + 32 * dir))
-        {
+        if (sidesOkay(myHero.getX() + 32 * dir)) {
             myHero.setHorizontalSpeed(dir * .170);
             moveRate = new Timer((int) (120));
         }
         myHero.setDirection(dir);
     }
 
-
-    public boolean sidesOkay ()
-    {
+    public boolean sidesOkay () {
         // check sprites edges against boundaries of the frame:
         //   0 .. width
-        if (myHero.getX() < 0 || myHero.getX() + myHero.getWidth() > getWidth())
-        {
+        if (myHero.getX() < 0 || myHero.getX() + myHero.getWidth() > getWidth()) {
             return false;
         }
         return true;
     }
 
-
-    public boolean sidesOkay (double x)
-    {
+    public boolean sidesOkay (double x) {
         // check sprites edges against boundaries of the frame:
         //   0 .. width
-        if (x < 0 || x + myHero.getWidth() >= getWidth())
-        {
+        if (x < 0 || x + myHero.getWidth() >= getWidth()) {
             return false;
         }
         return true;
     }
 
-
-    private void setProperXHero ()
-    {
+    private void setProperXHero () {
         int currentX = (int) myHero.getX();
         if (currentX % 32 < 16) myHero.setX(currentX - currentX % 32);
         else myHero.setX(currentX - currentX % 32 + 32);
     }
 
-
-    private void setProperXRock (Sprite s2)
-    {
+    private void setProperXRock (Sprite s2) {
         int currentX = (int) s2.getX();
         if (currentX % 32 < 16) s2.setX(currentX - currentX % 32);
         else s2.setX(currentX - currentX % 32 + 32);
     }
 
-
-    private void setProperY (Sprite s1)
-    {
+    private void setProperY (Sprite s1) {
         int currentY = (int) s1.getY();
         if (currentY % 40 < 20) s1.setY(currentY - currentY % 40);
         else s1.setY(currentY - currentY % 40 + 40);
     }
 
-
-    private boolean notMoving ()
-    {
+    private boolean notMoving () {
         return (myHero.getVerticalSpeed() == 0) &
                (myHero.getHorizontalSpeed() == 0);
 
     }
 
-
-    public static void main (String[] args)
-    {
+    public static void main (String[] args) {
         GameLoader gLoader = new GameLoader();
         gLoader.setup(new BlockAndRoll(), new Dimension(800, 600), false);
         gLoader.start();
